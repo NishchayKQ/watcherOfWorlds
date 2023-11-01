@@ -1,0 +1,16 @@
+1) g calender compatible
+
+2) category of events. multi events support like (bday + imp)
+
+3) asynchronous calls to g calendar
+
+4) background sync
+
+5) push local reminders to global (g calender)
+
+6) delete reminders
+
+7) bulk add reminders with x preset. and y is new stuff. finally create reminders with x + y 
+
+8) ability to find out my free time with seeing my calendar schedule.
+9) default input is add reminder.
