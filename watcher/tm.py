@@ -29,7 +29,7 @@ def options() -> None:
 hours = ("h", "hr",  "hrs", "hour", "hours")
 mins = ("m", "min", "mins", "minute", "minutes")
 secs = ("s", "sec", "seconds")
-hours = re.compile("hr")
+gigaPattern = re.compile("(?i)(.*)(h|hr|hrs|hour|hours)(.*)(m|min|mins|minute|minutes)")
 
 
 def addReminder(whatToDo) -> bool:  # opton 1
