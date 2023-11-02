@@ -1,5 +1,6 @@
 import json
-
+import re
+#import asyncio
 
 def takeIn() -> str:
     ara = input(": ").replace("\n", "")
@@ -27,7 +28,7 @@ def options() -> None:
 hours = ("h", "hr",  "hrs", "hour", "hours")
 mins = ("m", "min", "mins", "minute", "minutes")
 secs = ("s", "sec", "seconds")
-
+hours = re.compile("hr")
 
 def addReminder(whatToDo) -> bool:  # opton 1
     if hours in whatToDo:

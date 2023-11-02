@@ -16,10 +16,11 @@
 9) default input is add reminder.
 
 10) supported formats:
-        space or without space/hrs + hr + h + hours + hour / min + mins + m + minutes + minute/ sec + seconds + s  
+        space or without space/hrs + hr + h + hours + hour / min + mins + m + minutes + minute/ sec + seconds + s 
+        test against 10h40 / 40m11h...
+        make sure only one hr, sec, min is there
 
 11) really flexible with opening / closing it
 
 12) maybe an option to launch su/an within in?
         a save and launch feature...call the saver function and push the command to console...
-
