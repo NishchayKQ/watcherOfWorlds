@@ -26,20 +26,49 @@ def options() -> None:
                                     e - exit""")
 
 
-hours = ("h", "hr",  "hrs", "hour", "hours")
-mins = ("m", "min", "mins", "minute", "minutes")
-secs = ("s", "sec", "seconds")
 gigaPattern = re.compile(
-    r"(?i)(.*)(h|hr|hrs|hour|hours)(.*)(m|min|mins|minute|minutes)")
-("(d|day|days)(w|week|weeks)(m|month|months)(y|yr|yrs|year|years)")
+    r"(?i)^(?:(?:(?:\d+)(?:(hours|hour|hrs|hr|h)|(minutes|minute|mins|min|m)|(days|day|d)|(weeks|week|w)|(months|month)|(years|year|yrs|yr|y)))+)$")
+standard = ["mins", "hrs", "days", "weeks", "months", "years"]
 
 
-def addReminder(whatToDo) -> bool:  # opton 1
-    if hours in whatToDo:
-        print("kono dio da")
+def addReminder(searchin: str) -> bool:  # opton 1
+    try:
+        found = gigaPattern.match(searchin)
+        dataDict = {}
+        i = 1
+        for a in found.groups():
+            if not a:
+                i = i + 1
+                continue
+            match i:
+                case 1:
+                    dataDict.update(
+                        {"hrs": re.search(fr"(\d+){a}", searchin).group(1)})
+                case 2:
+                    dataDict.update(
+                        {"mins": re.search(fr"(\d+){a}", searchin).group(1)})
+                case 3:
+                    dataDict.update(
+                        {"days": re.search(fr"(\d+){a}", searchin).group(1)})
+                case 4:
+                    dataDict.update(
+                        {"weeks": re.search(fr"(\d+){a}", searchin).group(1)})
+                case 5:
+                    dataDict.update(
+                        {"months": re.search(fr"(\d+){a}", searchin).group(1)})
+                case 6:
+                    dataDict.update(
+                        {"years": re.search(fr"(\d+){a}", searchin).group(1)})
+                case _:
+                    print("critical error encountered 5535")
+            i = i + 1
+        # for ara in standard:
+        #     dataDict.get(ara)
 
-    if whatToDo == "bad data in input and cant process it":
+    except AttributeError:
         return True
+    else:
+        return False
 
 
 DataList = startUp()
