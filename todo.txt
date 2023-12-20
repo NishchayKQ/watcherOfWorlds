@@ -25,5 +25,9 @@
 
 12) maybe an option to launch su/an within in?
         a save and launch feature...call the saver function and push the command to console...
+        + learn about how python programs r recognised terminal cmds , ex: yt-dlp
+                add rm command that u can access from terminal 
+
 13) before trying google calender api , first see how the notification integration with termux or maybe with gcalender itself to send temporary notification(though this isnt offline) is going to work...any offline android api? also check effecient ways to integrate *time drain* in android instead of await sleep(400days)...is tasker integration possible? or good enough?
-14) add rm command that u can access from terminal 
+14) we can validate user input in this and other,programs with regex..[\d\w]+
+        for better error handling! + input validation
