@@ -1,11 +1,7 @@
 import json
 import re
+import os
 # import asyncio
-
-
-def takeIn() -> str:
-    ara = input(": ").replace("\n", "")
-    return ara
 
 
 def startUp() -> list:
@@ -16,7 +12,7 @@ def startUp() -> list:
 def saveAndClose(savingDataList: list) -> None:
     print("saved successfully !")
     with open("bigData.json", mode="w") as araFile:
-        json.dump(araFile)
+        json.dump(araFile, indent=4)
 
 
 def options() -> None:
@@ -27,11 +23,12 @@ def options() -> None:
 
 
 gigaPattern = re.compile(
-    r"(?i)^(?:(?:(?:\d+)(?:(hours|hour|hrs|hr|h)|(minutes|minute|mins|min|m)|(days|day|d)|(weeks|week|w)|(months|month)|(years|year|yrs|yr|y)))+)$")
+    r"(?i)^(?:(?:(?:\d+)(?:(hours|hour|hrs|hr|h)|(minutes|minute|mins|min|m)|"
+    r"(days|day|d)|(weeks|week|w)|(months|month)|(years|year|yrs|yr|y)))+)$")
 standard = ["mins", "hrs", "days", "weeks", "months", "years"]
 
 
-def addReminder(searchin: str) -> bool:  # opton 1
+def addReminder(searchin: str) -> bool:
     try:
         found = gigaPattern.match(searchin)
         dataDict = {}
@@ -68,6 +65,9 @@ def addReminder(searchin: str) -> bool:  # opton 1
     except AttributeError:
         return True
     else:
+
+        os.system('am broadcast --user 0 -a net.dinglish.tasker.totals'
+                  rf' -e totals "${dataDict}"')
         return False
 
 
@@ -78,7 +78,7 @@ while True:
         printOptions = False
         options()
 
-    WhatToDo = takeIn()
+    WhatToDo = input(": ")
 
     match WhatToDo:
         case 'e':
@@ -87,6 +87,5 @@ while True:
         case '1':
             pass
         case _:
-            print("tring to comprehend what u meant by that...")
             if addReminder(WhatToDo):
                 print("bad bad input")

@@ -1,3 +1,6 @@
-/.idea
+.idea
 credentials.json
 token.json
+.vscode
+watcher/*json
+watcher/*.py
