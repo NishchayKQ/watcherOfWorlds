@@ -70,12 +70,12 @@ def addReminder(searchin: str) -> bool:
     except AttributeError:
         return True
     else:
-        hrs = f"{f'hrs \"{dataDict["hrs"]}\"' if dataDict['hrs'] else ''}"
-        mins = f"{f'mins \"{dataDict["mins"]}\"' if dataDict['mins'] else ''}"
-        days = f"{f'days \"{dataDict["days"]}\"' if dataDict['days'] else ''}"
-        weeks = f"{f'weeks \"{dataDict["weeks"]}\"' if dataDict['weeks'] else ''}"
-        months = f"{f'months \"{dataDict["months"]}\"' if dataDict['months'] else ''}"
-        years = f"{f'years \"{dataDict["years"]}\"' if dataDict['years'] else ''}"
+        hrs = f"{f'hrs "{dataDict["hrs"]}"' if dataDict['hrs'] else 'hrs "0"'}"
+        mins = f"{f'mins "{dataDict["mins"]}"' if dataDict['mins'] else 'mins "0"'}"
+        days = f"{f'days "{dataDict["days"]}"' if dataDict['days'] else 'days "0"'}"
+        weeks = f"{f'weeks "{dataDict["weeks"]}"' if dataDict['weeks'] else 'weeks "0"'}"
+        months = f"{f'months "{dataDict["months"]}"' if dataDict['months'] else 'months "0"'}"
+        years = f"{f'years "{dataDict["years"]}"' if dataDict['years'] else 'years "0"'}"
         temp = hrs + mins + days + weeks + months + years
         os.system(f'am broadcast --user 0 -a nya.wryyy -e {temp}')
         return False
