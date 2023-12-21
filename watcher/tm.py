@@ -5,14 +5,18 @@ import os
 
 
 def startUp() -> list:
-    with open("bigData.json") as araFile:
-        return json.load(araFile)
+    try:
+        with open("bigData.json") as araFile:
+            return json.load(araFile)
+    except FileNotFoundError:
+        with open("bigData.json", mode="w") as nyaFile:
+            json.dump({}, nyaFile, indent=4)
 
 
 def saveAndClose(savingDataList: list) -> None:
     print("saved successfully !")
     with open("bigData.json", mode="w") as araFile:
-        json.dump(araFile, indent=4)
+        json.dump(savingDataList, araFile, indent=4)
 
 
 def options() -> None:
@@ -31,7 +35,8 @@ standard = ["mins", "hrs", "days", "weeks", "months", "years"]
 def addReminder(searchin: str) -> bool:
     try:
         found = gigaPattern.match(searchin)
-        dataDict = {}
+        dataDict = {"mins": None, "hrs": None, "days": None,
+                    "weeks": None, "months": None, "years": None}
         i = 1
         for a in found.groups():
             if not a:
@@ -65,9 +70,14 @@ def addReminder(searchin: str) -> bool:
     except AttributeError:
         return True
     else:
-
-        os.system('am broadcast --user 0 -a net.dinglish.tasker.totals'
-                  rf' -e totals "${dataDict}"')
+        hrs = f"{f'hrs \"{dataDict["hrs"]}\"' if dataDict['hrs'] else ''}"
+        mins = f"{f'mins \"{dataDict["mins"]}\"' if dataDict['mins'] else ''}"
+        days = f"{f'days \"{dataDict["days"]}\"' if dataDict['days'] else ''}"
+        weeks = f"{f'weeks \"{dataDict["weeks"]}\"' if dataDict['weeks'] else ''}"
+        months = f"{f'months \"{dataDict["months"]}\"' if dataDict['months'] else ''}"
+        years = f"{f'years \"{dataDict["years"]}\"' if dataDict['years'] else ''}"
+        temp = hrs + mins + days + weeks + months + years
+        os.system(f'am broadcast --user 0 -a nya.wryyy -e {temp}')
         return False
 
 
