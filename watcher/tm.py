@@ -34,7 +34,12 @@ standard = ["mins", "hrs", "days", "weeks", "months", "years"]
 
 def addReminder(searchin: str) -> bool:
     try:
-        found = gigaPattern.match(searchin)
+        try:
+            temp, reason = searchin.split(maxsplit=1)
+            found = gigaPattern.match(temp)
+        except ValueError:
+            reason = "You set a reminder for x mins about something"
+            found = gigaPattern.match(searchin)
         dataDict = {"mins": None, "hrs": None, "days": None,
                     "weeks": None, "months": None, "years": None}
         i = 1
@@ -70,14 +75,16 @@ def addReminder(searchin: str) -> bool:
     except AttributeError:
         return True
     else:
-        hrs = f"{f'hrs "{dataDict["hrs"]}"' if dataDict['hrs'] else 'hrs "0"'}"
-        mins = f"{f'mins "{dataDict["mins"]}"' if dataDict['mins'] else 'mins "0"'}"
-        days = f"{f'days "{dataDict["days"]}"' if dataDict['days'] else 'days "0"'}"
-        weeks = f"{f'weeks "{dataDict["weeks"]}"' if dataDict['weeks'] else 'weeks "0"'}"
-        months = f"{f'months "{dataDict["months"]}"' if dataDict['months'] else 'months "0"'}"
-        years = f"{f'years "{dataDict["years"]}"' if dataDict['years'] else 'years "0"'}"
+        hrs = f'''{f'--ei hrs {dataDict["hrs"]} ' if dataDict['hrs'] else '--ei hrs 0 '}'''
+        mins = f'''{f'--ei mins {dataDict["mins"]} ' if dataDict['mins'] else '--ei mins 0 '}'''
+        days = f'''{f'--ei days {dataDict["days"]} ' if dataDict['days'] else '--ei days 0 '}'''
+        weeks = f'''{f'--ei weeks {dataDict["weeks"]} ' if dataDict['weeks'] else '--ei weeks 0 '}'''
+        months = f'''{f'--ei months {dataDict["months"]} ' if dataDict['months'] else '--ei months 0 '}'''
+        years = f'''{f'--ei years {dataDict["years"]} ' if dataDict['years'] else '--ei years 0 '}'''
         temp = hrs + mins + days + weeks + months + years
-        os.system(f'am broadcast --user 0 -a nya.wryyy -e {temp}')
+        temp = f'am broadcast --user 0 -a nya.wryyy {temp}--es reason "{reason}"'
+        os.system(temp)
+        print(temp)
         return False
 
 
