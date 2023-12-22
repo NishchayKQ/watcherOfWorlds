@@ -5,3 +5,4 @@ token.json
 watcher/*json
 watcher/*.py
 *json
+watcher/__pycache__

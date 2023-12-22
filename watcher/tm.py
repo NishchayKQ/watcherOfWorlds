@@ -32,14 +32,10 @@ gigaPattern = re.compile(
 standard = ["mins", "hrs", "days", "weeks", "months", "years"]
 
 
-def addReminder(searchin: str) -> bool:
+def addReminder(searchin: str, reason: str = None) -> bool:
     try:
-        try:
-            temp, reason = searchin.split(maxsplit=1)
-            found = gigaPattern.match(temp)
-        except ValueError:
-            reason = "You set a reminder for x mins about something"
-            found = gigaPattern.match(searchin)
+
+        found = gigaPattern.match(searchin)
         dataDict = {"mins": None, "hrs": None, "days": None,
                     "weeks": None, "months": None, "years": None}
         i = 1
@@ -75,6 +71,9 @@ def addReminder(searchin: str) -> bool:
     except AttributeError:
         return True
     else:
+
+        final_reason = f'''{f'{dataDict["days"]} days ' if dataDict["days"] else ''}{f'{dataDict["hrs"]} hours ' if dataDict["hrs"] else ''}{'and ' if (dataDict["days"] or dataDict["hrs"]) and dataDict["mins"] else ''}{f'{dataDict["mins"]} minutes ' if dataDict["mins"] else ''}ago you asked to be reminded of {f'{reason}' if reason else 'something!'}'''
+
         hrs = f'''{f'--ei hrs {dataDict["hrs"]} ' if dataDict['hrs'] else '--ei hrs 0 '}'''
         mins = f'''{f'--ei mins {dataDict["mins"]} ' if dataDict['mins'] else '--ei mins 0 '}'''
         days = f'''{f'--ei days {dataDict["days"]} ' if dataDict['days'] else '--ei days 0 '}'''
@@ -82,27 +81,33 @@ def addReminder(searchin: str) -> bool:
         months = f'''{f'--ei months {dataDict["months"]} ' if dataDict['months'] else '--ei months 0 '}'''
         years = f'''{f'--ei years {dataDict["years"]} ' if dataDict['years'] else '--ei years 0 '}'''
         temp = hrs + mins + days + weeks + months + years
-        temp = f'am broadcast --user 0 -a nya.wryyy {temp}--es reason "{reason}"'
+        temp = f'am broadcast --user 0 -a nya.wryyy {temp}--es reason "{final_reason}"'
         os.system(temp)
         print(temp)
         return False
 
 
-DataList = startUp()
-printOptions = True
-while True:
-    if printOptions:
-        printOptions = False
-        options()
+if __name__ == "__main__":
+    DataList = startUp()
+    printOptions = True
+    while True:
+        if printOptions:
+            printOptions = False
+            options()
 
-    WhatToDo = input(": ")
+        WhatToDo = input(": ")
 
-    match WhatToDo:
-        case 'e':
-            saveAndClose()
-            break
-        case '1':
-            pass
-        case _:
-            if addReminder(WhatToDo):
-                print("bad bad input")
+        match WhatToDo:
+            case 'e':
+                saveAndClose()
+                break
+            case '1':
+                pass
+            case _:
+                try:
+                    temp, reason = WhatToDo.split(maxsplit=1)
+                except ValueError:
+                    reason = None
+                    temp = WhatToDo
+                if addReminder(temp, reason):
+                    print("bad bad input")

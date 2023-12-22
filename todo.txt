@@ -31,3 +31,8 @@
 13) before trying google calender api , first see how the notification integration with termux or maybe with gcalender itself to send temporary notification(though this isnt offline) is going to work...any offline android api? also check effecient ways to integrate *time drain* in android instead of await sleep(400days)...is tasker integration possible? or good enough?
 14) we can validate user input in this and other,programs with regex..[\d\w]+
         for better error handling! + input validation
+15) try:
+        import curses
+        to see the width of devicee to structure the text...if module not found(windows) then default to basic way... 
+16) add rm support for windows as well...like tasker does it for android
+17) how hard is it just to make an apk which handles the intents and then sends a notif at the specified time..
