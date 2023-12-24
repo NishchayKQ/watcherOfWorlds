@@ -72,7 +72,7 @@ def addReminder(searchin: str, reason: str = None) -> bool:
         return True
     else:
 
-        final_reason = f'''{f'{dataDict["days"]} days ' if dataDict["days"] else ''}{f'{dataDict["hrs"]} hours ' if dataDict["hrs"] else ''}{'and ' if (dataDict["days"] or dataDict["hrs"]) and dataDict["mins"] else ''}{f'{dataDict["mins"]} minutes ' if dataDict["mins"] else ''}ago you asked to be reminded of {f'{reason}' if reason else 'something!'}'''
+        final_reason = f'''{f'{dataDict["days"]} days ' if dataDict["days"] else ''}{f'{dataDict["hrs"]} hours ' if dataDict["hrs"] else ''}{'and ' if (dataDict["days"] or dataDict["hrs"]) and dataDict["mins"] else ''}{f'{dataDict["mins"]} minutes ' if dataDict["mins"] else ''}ago you asked to be reminded of {f'{reason.rstrip()}' if reason else 'something!'}'''
 
         hrs = f'''{f'--ei hrs {dataDict["hrs"]} ' if dataDict['hrs'] else '--ei hrs 0 '}'''
         mins = f'''{f'--ei mins {dataDict["mins"]} ' if dataDict['mins'] else '--ei mins 0 '}'''
